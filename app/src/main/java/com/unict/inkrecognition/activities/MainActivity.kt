@@ -1,12 +1,14 @@
-package com.unict.inkrecognition
+package com.unict.inkrecognition.activities
 
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.ComponentActivity
-import com.unict.inkrecognition.StrokeManager.clear
-import com.unict.inkrecognition.StrokeManager.download
-import com.unict.inkrecognition.StrokeManager.recognize
+import com.unict.inkrecognition.views.DrawView
+import com.unict.inkrecognition.R
+import com.unict.inkrecognition.managers.StrokeManager.clear
+import com.unict.inkrecognition.managers.StrokeManager.download
+import com.unict.inkrecognition.managers.StrokeManager.recognize
 
 
 class MainActivity : ComponentActivity() {
@@ -20,7 +22,7 @@ class MainActivity : ComponentActivity() {
         setContentView(R.layout.main_activity)
         btnRecognize = findViewById(R.id.buttonRecognize)
         btnClear = findViewById(R.id.buttonClear)
-        drawView = findViewById(R.id.draw_view)
+        drawView = findViewById(R.id.drawView)
         textView = findViewById(R.id.textResult)
 
         download()
@@ -29,6 +31,7 @@ class MainActivity : ComponentActivity() {
                 textView
             )
         }
+
         btnClear.setOnClickListener {
             drawView.clear()
             clear()

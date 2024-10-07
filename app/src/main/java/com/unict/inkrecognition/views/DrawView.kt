@@ -1,12 +1,13 @@
-package com.unict.inkrecognition
+package com.unict.inkrecognition.views
 
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import com.unict.inkrecognition.managers.StrokeManager
 
-class DrawView(context: Context?, attrs: AttributeSet): View(context) {
+class DrawView (context: Context?, attrs: AttributeSet): View(context, attrs) {
     private val currentStrokePaint: Paint = Paint()
     private val canvasPaint: Paint
     private val currentStroke: Path

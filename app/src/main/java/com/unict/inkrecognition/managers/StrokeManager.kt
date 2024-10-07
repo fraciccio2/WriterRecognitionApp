@@ -1,4 +1,4 @@
-package com.unict.inkrecognition
+package com.unict.inkrecognition.managers
 
 import android.content.ContentValues
 import android.util.Log

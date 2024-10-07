@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,12 +21,12 @@
             android:layout_height="0dp"
             android:layout_weight="0.8">
 
-            <com.unict.inkrecognition.DrawView
-                android:id="@+id/draw_view"
+            <com.unict.inkrecognition.views.DrawView
+                android:id="@+id/drawView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white">
-            </com.unict.inkrecognition.DrawView>
+            </com.unict.inkrecognition.views.DrawView>
 
         </LinearLayout>
 
@@ -62,10 +62,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
-                android:text="Recognize"
+                android:text="Riconosci"
                 android:textSize="18sp"
                 android:textAllCaps="false"
                 android:layout_margin="25dp"
+                android:textColor="@color/blue"
                 android:backgroundTint="@color/black">
             </Button>
 
@@ -76,9 +77,10 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
                 android:textSize="20sp"
-                android:text="C"
+                android:text="Cancella"
                 android:textAllCaps="false"
                 android:layout_margin="25dp"
+                android:textColor="@color/blue"
                 android:backgroundTint="@color/black">
             </Button>
 
