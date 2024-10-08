@@ -1,42 +1,52 @@
 package com.unict.inkrecognition.activities
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
 import androidx.activity.ComponentActivity
-import com.unict.inkrecognition.views.DrawView
+import androidx.activity.result.contract.ActivityResultContracts
 import com.unict.inkrecognition.R
-import com.unict.inkrecognition.managers.StrokeManager.clear
-import com.unict.inkrecognition.managers.StrokeManager.download
-import com.unict.inkrecognition.managers.StrokeManager.recognize
 
 
 class MainActivity : ComponentActivity() {
-    private lateinit var btnRecognize: Button
-    private lateinit var btnClear: Button
-    private lateinit var drawView: DrawView
-    private lateinit var textView: TextView
+    private lateinit var btn1: Button
+    private lateinit var btn2: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-        btnRecognize = findViewById(R.id.buttonRecognize)
-        btnClear = findViewById(R.id.buttonClear)
-        drawView = findViewById(R.id.drawView)
-        textView = findViewById(R.id.textResult)
+        btn1 = findViewById(R.id.button1)
+        btn2 = findViewById(R.id.button2)
 
-        download()
-        btnRecognize.setOnClickListener {
-            recognize(
-                textView
-            )
+        btn1.setOnClickListener {
+            pickImageGallery()
         }
+    }
 
-        btnClear.setOnClickListener {
-            drawView.clear()
-            clear()
-            textView.text = ""
+    private fun pickImageGallery() {
+        val intent = Intent()
+        intent.setType("image/*")
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        intent.setAction(Intent.ACTION_GET_CONTENT)
+        resultLauncher.launch(intent)
+    }
+
+    private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if(result.resultCode == Activity.RESULT_OK) {
+            val data = result.data;
+            if(data != null) {
+                data.clipData?.let { clipData ->
+                    val count = clipData.itemCount
+                    for (i in 0 until count) {
+                        val imageUri = clipData.getItemAt(i).uri
+                    }
+                } ?: run {
+                    data?.data?.let { uri ->
+                        val imagePath = uri.path
+                    }
+                }
+            }
         }
-
     }
 }
