@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Button
+import android.widget.EditText
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import com.unict.inkrecognition.R
@@ -25,8 +26,12 @@ class MainActivity : ComponentActivity() {
     private lateinit var btn1: Button
     private lateinit var btn2: Button
     private lateinit var btn3: Button
+    private lateinit var btn4: Button
+    private lateinit var input1: EditText
+    private lateinit var input2: EditText
     private var files1: ArrayList<File> = arrayListOf()
     private var files2: ArrayList<File> = arrayListOf()
+    private var files3: ArrayList<File> = arrayListOf()
     private var currentArray: MutableList<File>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +40,9 @@ class MainActivity : ComponentActivity() {
         btn1 = findViewById(R.id.button1)
         btn2 = findViewById(R.id.button2)
         btn3 = findViewById(R.id.button3)
+        btn4 = findViewById(R.id.button4)
+        input1 = findViewById(R.id.input1)
+        input2 = findViewById(R.id.input2)
 
         btn1.setOnClickListener {
             pickImageGallery(files1)
@@ -45,6 +53,10 @@ class MainActivity : ComponentActivity() {
         }
 
         btn3.setOnClickListener {
+            pickImageGallery(files3)
+        }
+
+        btn4.setOnClickListener {
             postRequest()
         }
     }
@@ -89,18 +101,28 @@ class MainActivity : ComponentActivity() {
         val multipartBodyBuilder = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
 
-        for((i, f) in files1.withIndex()) {
-            multipartBodyBuilder.addFormDataPart("f$i", f.name, f.asRequestBody(MEDIA_TYPE_MARKDOWN))
+        for((y, f) in files1.withIndex()) {
+            multipartBodyBuilder.addFormDataPart("${input1.text}$y", f.name, f.asRequestBody(MEDIA_TYPE_MARKDOWN))
         }
 
         for((y, f) in files2.withIndex()) {
-            multipartBodyBuilder.addFormDataPart("ff$y", f.name, f.asRequestBody(MEDIA_TYPE_MARKDOWN))
+            multipartBodyBuilder.addFormDataPart("${input2.text}$y", f.name, f.asRequestBody(MEDIA_TYPE_MARKDOWN))
         }
+
+        for((y, f) in files3.withIndex()) {
+            multipartBodyBuilder.addFormDataPart("test$y", f.name, f.asRequestBody(MEDIA_TYPE_MARKDOWN))
+        }
+
+        val value1 = input1.text.toString()
+        val value2 = input2.text.toString()
+        val valuesArray = arrayOf(value1, value2)
+
+        multipartBodyBuilder.addFormDataPart("writers", valuesArray.joinToString(","))
 
         val requestBody = multipartBodyBuilder.build()
 
         val request = Request.Builder()
-            .url("https://api.imgur.com/3/image")
+            .url("http://192.168.230.105:5000/files")
             .post(requestBody)
             .build()
 

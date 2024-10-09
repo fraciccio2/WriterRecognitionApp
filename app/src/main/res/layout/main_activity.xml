@@ -1,50 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity">
+    android:orientation="vertical">
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:text="Carica"
-        android:textSize="18sp"
-        android:textAllCaps="false"
-        android:layout_margin="25dp"
-        android:textColor="@color/blue"
-        android:backgroundTint="@color/black">
-    </Button>
+    <!-- Parte superiore con due bottoni -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:textSize="20sp"
-        android:text="Carica"
-        android:textAllCaps="false"
-        android:layout_margin="25dp"
-        android:textColor="@color/blue"
-        android:backgroundTint="@color/black">
-    </Button>
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Button 1"
+                android:layout_margin="8dp" />
 
+            <EditText
+                android:id="@+id/input1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Input 1" />
+        </LinearLayout>
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:textSize="20sp"
-        android:text="Invia files"
-        android:textAllCaps="false"
-        android:layout_margin="25dp"
-        android:textColor="@color/blue"
-        android:backgroundTint="@color/black">
-    </Button>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Button 2"
+                android:layout_margin="8dp" />
+
+            <EditText
+                android:id="@+id/input2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Input 2" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Parte inferiore -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- Bottone in alto -->
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Carica Test"
+            android:layout_gravity="top"
+            android:layout_marginTop
+                ="8dp" />
+
+        <!-- Spazio vuoto per separare i bottoni -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- Bottone in basso -->
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Processa"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="8dp" />
+    </LinearLayout>
 
 </LinearLayout>
+
