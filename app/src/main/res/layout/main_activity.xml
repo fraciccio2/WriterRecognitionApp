@@ -1,92 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!-- Parte superiore con due bottoni -->
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_writers"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_weight="7"
+        android:backgroundTint="@color/main_color"
+        android:theme="@style/Theme.MaterialComponents.Light"
+        app:cardCornerRadius="16dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/card_writer"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="9" />
+
+            <Button
+                android:id="@+id/add_writer_btn"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/main_color_border"
+                android:gravity="center_vertical"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="Nuovo Scrittore"
+                android:textSize="24sp"
+                android:drawableEnd="@drawable/ic_baseline_add_24"
+                app:cornerRadius="30dp" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_weight="2"
+        android:backgroundTint="@color/main_color"
+        android:theme="@style/Theme.MaterialComponents.Light"
+        app:cardCornerRadius="16dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/test_btn"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/main_color_border"
+                android:text="Immagine di test"
+                android:gravity="center_vertical"
+                android:drawableEnd="@drawable/ic_baseline_add_24"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:textSize="24sp"
+                app:cornerRadius="30dp" />
+
+            <LinearLayout
+                android:id="@+id/test_layout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:visibility="invisible">
+
+                <TextView
+                    android:id="@+id/text_view_test"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/test_show_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_backup_24"
+                    android:contentDescription="show image"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <Button
+        android:id="@+id/load_data"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/main_color_background_border"
+        android:gravity="center_vertical"
+        android:text="Elabora i dati"
+        android:drawableEnd="@drawable/ic_baseline_arrow_forward_24"
+        android:textSize="24sp"
+        android:textColor="@color/white"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        >
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <Button
-                android:id="@+id/button1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Button 1"
-                android:layout_margin="8dp" />
-
-            <EditText
-                android:id="@+id/input1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Input 1" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Button 2"
-                android:layout_margin="8dp" />
-
-            <EditText
-                android:id="@+id/input2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Input 2" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <!-- Parte inferiore -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <!-- Bottone in alto -->
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Carica Test"
-            android:layout_gravity="top"
-            android:layout_marginTop
-                ="8dp" />
-
-        <!-- Spazio vuoto per separare i bottoni -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <!-- Bottone in basso -->
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Processa"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="8dp" />
-    </LinearLayout>
+    </Button>
 
 </LinearLayout>
 

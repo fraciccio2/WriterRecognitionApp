@@ -1,15 +1,25 @@
 package com.unict.inkrecognition.activities
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.View
 import android.widget.Button
-import android.widget.EditText
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.unict.inkrecognition.R
+import com.unict.inkrecognition.adaperts.WriterCardAdapter
+import com.unict.inkrecognition.models.Writer
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaType
@@ -23,64 +33,84 @@ import java.io.IOException
 
 
 class MainActivity : ComponentActivity() {
-    private lateinit var btn1: Button
-    private lateinit var btn2: Button
-    private lateinit var btn3: Button
-    private lateinit var btn4: Button
-    private lateinit var input1: EditText
-    private lateinit var input2: EditText
-    private var files1: ArrayList<File> = arrayListOf()
-    private var files2: ArrayList<File> = arrayListOf()
-    private var files3: ArrayList<File> = arrayListOf()
-    private var currentArray: MutableList<File>? = null
+    private lateinit var addWriterBtn: Button
+    private lateinit var addTestFileBtn: Button
+    private lateinit var loadDataBtn: Button
+    private lateinit var testLayout: LinearLayout
+    private lateinit var testTextView: TextView
+    private lateinit var testImageView: ImageView
+    private lateinit var fileTest: File
+    private var writers: ArrayList<Writer> = arrayListOf(
+        Writer(
+            name = "",
+            files = arrayListOf()
+        ),
+        Writer(
+            name = "",
+            files = arrayListOf()
+        )
+    )
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: WriterCardAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-        btn1 = findViewById(R.id.button1)
-        btn2 = findViewById(R.id.button2)
-        btn3 = findViewById(R.id.button3)
-        btn4 = findViewById(R.id.button4)
-        input1 = findViewById(R.id.input1)
-        input2 = findViewById(R.id.input2)
 
-        btn1.setOnClickListener {
-            pickImageGallery(files1)
+        addWriterBtn = findViewById(R.id.add_writer_btn)
+        addTestFileBtn = findViewById(R.id.test_btn)
+        loadDataBtn = findViewById(R.id.load_data)
+        testLayout = findViewById(R.id.test_layout)
+        testTextView = findViewById(R.id.text_view_test)
+        testImageView = findViewById(R.id.test_show_image)
+        recyclerView = findViewById(R.id.card_writer)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = WriterCardAdapter(writers, this)
+        recyclerView.adapter = adapter
+
+        addWriterBtn.setOnClickListener {
+            writers.add(Writer(
+                name = "",
+                files = arrayListOf()
+            ))
+            adapter.notifyItemInserted(writers.size - 1)
+            recyclerView.smoothScrollToPosition(writers.size - 1)
         }
 
-        btn2.setOnClickListener {
-            pickImageGallery(files2)
+        addTestFileBtn.setOnClickListener {
+            val intent = Intent()
+            intent.setType("image/*")
+            intent.setAction(Intent.ACTION_GET_CONTENT)
+            resultLauncher.launch(intent)
         }
 
-        btn3.setOnClickListener {
-            pickImageGallery(files3)
-        }
-
-        btn4.setOnClickListener {
+        loadDataBtn.setOnClickListener {
             postRequest()
         }
-    }
 
-    private fun pickImageGallery(array: MutableList<File>) {
-        currentArray = array
-        val intent = Intent()
-        intent.setType("image/*")
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        intent.setAction(Intent.ACTION_GET_CONTENT)
-        resultLauncher.launch(intent)
+        testImageView.setOnClickListener {
+            //TODO rivedere
+            val mBuilder = AlertDialog.Builder(this,android.R.style.Theme_DeviceDefault_NoActionBar_Fullscreen)
+            val mAlertDialog = mBuilder.create()
+            mAlertDialog.setContentView(R.layout.alert_image)
+            val imageView: ImageView = mAlertDialog.findViewById(R.id.image_full_screen)
+            val options: RequestOptions = RequestOptions()
+                .centerCrop()
+                .placeholder(R.mipmap.ic_launcher_round)
+            Glide.with(this).load(fileTest).apply(options).into(imageView)
+            mAlertDialog.show()
+        }
     }
 
     private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if(result.resultCode == Activity.RESULT_OK) {
             val data = result.data;
             if(data != null) {
-                data.clipData?.let { clipData ->
-                    val count = clipData.itemCount
-                    for (i in 0 until count) {
-                        val imageUri = clipData.getItemAt(i).uri
-                        val file = getFileFromUri(imageUri)
-                        currentArray?.add(file)
-                    }
+                val imageUri = data.data
+                if(imageUri != null) {
+                    fileTest = getFileFromUri(imageUri)
+                    testLayout.visibility = View.VISIBLE
+                    testTextView.setText(fileTest.name)
                 }
             }
         }
@@ -101,28 +131,29 @@ class MainActivity : ComponentActivity() {
         val multipartBodyBuilder = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
 
-        for((y, f) in files1.withIndex()) {
-            multipartBodyBuilder.addFormDataPart("${input1.text}$y", f.name, f.asRequestBody(MEDIA_TYPE_MARKDOWN))
+        for(writer in writers) {
+            for((i, file) in writer.files.withIndex()) {
+                multipartBodyBuilder.addFormDataPart(
+                    "${writer.name}$i",
+                    file.name,
+                    file.asRequestBody(MEDIA_TYPE_MARKDOWN)
+                )
+            }
         }
 
-        for((y, f) in files2.withIndex()) {
-            multipartBodyBuilder.addFormDataPart("${input2.text}$y", f.name, f.asRequestBody(MEDIA_TYPE_MARKDOWN))
-        }
+        multipartBodyBuilder.addFormDataPart(
+            "test0",
+            fileTest.name,
+            fileTest.asRequestBody(MEDIA_TYPE_MARKDOWN)
+        )
 
-        for((y, f) in files3.withIndex()) {
-            multipartBodyBuilder.addFormDataPart("test$y", f.name, f.asRequestBody(MEDIA_TYPE_MARKDOWN))
-        }
-
-        val value1 = input1.text.toString()
-        val value2 = input2.text.toString()
-        val valuesArray = arrayOf(value1, value2)
-
-        multipartBodyBuilder.addFormDataPart("writers", valuesArray.joinToString(","))
+        val namesWriters = writers.joinToString(",") { w -> w.name }
+        multipartBodyBuilder.addFormDataPart("writers", namesWriters)
 
         val requestBody = multipartBodyBuilder.build()
 
         val request = Request.Builder()
-            .url("http://192.168.230.105:5000/files")
+            .url("http://192.168.1.62:5000/files")
             .post(requestBody)
             .build()
 
