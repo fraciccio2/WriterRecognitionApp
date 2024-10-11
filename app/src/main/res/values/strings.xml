@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Ink Recognition</string>
+    <string name="title_1">Inserisci gli scrittori</string>
+    <string name="new_writer">Nuovo Scrittore</string>
+    <string name="continue_">Prosegui</string>
+    <string name="WARNING">ATTENZIONE</string>
+    <string name="continue_modal_1">Proseguendo non si potrà tornare indietro, sei sicuro di vole proseguire?</string>
+    <string name="yes">si</string>
+    <string name="no">no</string>
+    <string name="writers_key">writers_key</string>
+    <string name="title_2">Inserisci il Test</string>
+    <string name="test_btn">Immagine di test</string>
+    <string name="test_all_btn">Analizza</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

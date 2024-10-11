@@ -16,7 +16,8 @@ import com.unict.inkrecognition.holders.WriterCardHolder
 import com.unict.inkrecognition.models.Writer
 import java.io.File
 
-class WriterCardAdapter(private val dataSet: ArrayList<Writer>, private val context: MainActivity): RecyclerView.Adapter<WriterCardHolder>() {
+class WriterCardAdapter(private val dataSet: ArrayList<Writer>, private val context: MainActivity) :
+    RecyclerView.Adapter<WriterCardHolder>() {
     private lateinit var item: Writer
     private var adapters: ArrayList<FileListAdapter> = arrayListOf()
     private lateinit var adapter: FileListAdapter
@@ -49,29 +50,32 @@ class WriterCardAdapter(private val dataSet: ArrayList<Writer>, private val cont
 
         holder.inputName.addTextChangedListener {
             dataSet[position].name = holder.inputName.text.toString()
+            context.checkContinueBtn()
         }
     }
 
     override fun getItemCount(): Int {
-       return dataSet.size
+        return dataSet.size
     }
 
-    private val resultLauncher = context.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if(result.resultCode == Activity.RESULT_OK) {
-            val data = result.data;
-            if(data != null) {
-                data.clipData?.let { clipData ->
-                    val count = clipData.itemCount
-                    for (i in 0 until count) {
-                        val imageUri = clipData.getItemAt(i).uri
-                        val file = getFileFromUri(imageUri)
-                        item.files.add(file)
-                        adapter.notifyItemInserted(item.files.size - 1)
+    private val resultLauncher =
+        context.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data = result.data;
+                if (data != null) {
+                    data.clipData?.let { clipData ->
+                        val count = clipData.itemCount
+                        for (i in 0 until count) {
+                            val imageUri = clipData.getItemAt(i).uri
+                            val file = getFileFromUri(imageUri)
+                            item.files.add(file)
+                            adapter.notifyItemInserted(item.files.size - 1)
+                        }
                     }
+                    context.checkContinueBtn()
                 }
             }
         }
-    }
 
     private fun getFileFromUri(uri: Uri): File {
         val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)

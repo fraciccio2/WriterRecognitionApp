@@ -9,9 +9,8 @@
 
     <ImageView
         android:id="@+id/image_full_screen"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
-        android:contentDescription=""
-        android:scaleType="centerInside"/>
+        android:scaleType="centerCrop"/>
 </LinearLayout>
