@@ -184,8 +184,8 @@ class TestActivity : AppCompatActivity() {
                         runOnUiThread {
                             result.text = state.results.firstOrNull() ?: "Nessun risultato"
                             val accuracy: Double = state.accuracies.firstOrNull() ?: 0.0
-                            val accuracyFormat = DecimalFormat("##.##")
-                            val formattedAccuracy = accuracyFormat.format(accuracy*10)+"%"
+                            val accuracyFormat = DecimalFormat("#.##%")
+                            val formattedAccuracy = accuracyFormat.format(accuracy)
                             resultAccuracy.text = formattedAccuracy
                             layoutResult.visibility = View.VISIBLE
                             progressBar.visibility = View.INVISIBLE
