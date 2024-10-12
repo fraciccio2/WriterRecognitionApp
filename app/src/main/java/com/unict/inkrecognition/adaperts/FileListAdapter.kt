@@ -1,9 +1,11 @@
 package com.unict.inkrecognition.adaperts
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.unict.inkrecognition.R
+import com.unict.inkrecognition.activities.ImageViewActivity
 import com.unict.inkrecognition.activities.MainActivity
 import com.unict.inkrecognition.holders.FileListHolder
 import java.io.File
@@ -24,7 +26,9 @@ class FileListAdapter(private val dataSet: ArrayList<File>, private val context:
         holder.textView.text = dataSet[position].name
 
         holder.imageView.setOnClickListener {
-            //TODO
+            val intent = Intent(context, ImageViewActivity::class.java)
+            intent.putExtra(context.getString(R.string.file_path_key), dataSet[position].path)
+            context.startActivity(intent)
         }
     }
 }

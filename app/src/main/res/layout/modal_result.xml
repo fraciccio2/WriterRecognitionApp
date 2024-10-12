@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="370dp"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="20dp"
+    android:theme="@style/Theme.MaterialComponents.Light"
+    android:background="@drawable/main_color_border">
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"/>
+
+    <LinearLayout
+        android:id="@+id/layout_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:layout_margin="8dp"
+            android:text="@string/result_message" />
+
+        <TextView
+            android:id="@+id/result_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/success"/>
+
+        <TextView
+            android:id="@+id/accuracy_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:layout_margin="8dp"
+            android:text="@string/analyze_images_accuracy" />
+
+        <TextView
+            android:id="@+id/result_accuracy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/success"/>
+
+        <Button
+            android:id="@+id/return_home_btn"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:drawableTop="@drawable/ic_baseline_home_24"
+            android:layout_gravity="center"
+            android:background="@drawable/danger_color_background"
+            android:layout_margin="8dp"
+            android:paddingTop="14dp"/>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

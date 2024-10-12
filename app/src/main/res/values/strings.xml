@@ -11,6 +11,8 @@
     <string name="title_2">Inserisci il Test</string>
     <string name="test_btn">Immagine di test</string>
     <string name="test_all_btn">Analizza</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="analyze_images_message">Proseguendo inizierai l\'elaborazione dei dati e non potrai tornare indietro, sei sicuro di voler preseguire?</string>
+    <string name="result_message">Lo scrittore dell\'immagine di test è:</string>
+    <string name="file_path_key">FILE_PATH</string>
+    <string name="analyze_images_accuracy">La probabilità della correttezza del risultato è:</string>
 </resources>

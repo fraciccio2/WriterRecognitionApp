@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.squareup.okhttp.v4120)
     implementation(libs.glide)
     implementation(libs.androidx.activity)
+    implementation(libs.jackson.module.kotlin.v2172)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

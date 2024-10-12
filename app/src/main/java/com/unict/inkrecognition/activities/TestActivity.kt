@@ -1,21 +1,27 @@
 package com.unict.inkrecognition.activities
 
 import android.app.Activity
-import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.icu.text.DecimalFormat
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import android.view.Window
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.unict.inkrecognition.R
+import com.unict.inkrecognition.models.TestResultResponse
 import com.unict.inkrecognition.models.Writer
 import com.unict.inkrecognition.objects.WritersObject
 import okhttp3.Call
@@ -58,23 +64,35 @@ class TestActivity : AppCompatActivity() {
         }
 
         loadDataBtn.setOnClickListener {
-            postRequest()
+            val dialog = Dialog(this)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setCancelable(false)
+            dialog.setContentView(R.layout.modal_dialog)
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            val message: TextView = dialog.findViewById(R.id.modal_message)
+            val yesBtn: Button = dialog.findViewById(R.id.yes_btn)
+            val noBtn: Button = dialog.findViewById(R.id.no_btn)
+            message.text = getString(R.string.analyze_images_message)
+            yesBtn.setOnClickListener {
+                val dialogNew = Dialog(this)
+                dialogNew.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                dialogNew.setCancelable(false)
+                dialogNew.setContentView(R.layout.modal_result)
+                dialogNew.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                dialog.dismiss()
+                dialogNew.show()
+                postRequest(dialogNew)
+            }
+            noBtn.setOnClickListener {
+                dialog.dismiss()
+            }
+            dialog.show()
         }
 
         testImageView.setOnClickListener {
-            //TODO rivedere
-            val mBuilder = AlertDialog.Builder(
-                this,
-                android.R.style.Theme_DeviceDefault_NoActionBar_Fullscreen
-            )
-            val mAlertDialog = mBuilder.create()
-            mAlertDialog.setContentView(R.layout.alert_image)
-            val imageView: ImageView = mAlertDialog.findViewById(R.id.image_full_screen)
-            val options: RequestOptions = RequestOptions()
-                .centerCrop()
-                .placeholder(R.mipmap.ic_launcher_round)
-            Glide.with(this).load(fileTest).apply(options).into(imageView)
-            mAlertDialog.show()
+            val intent = Intent(this, ImageViewActivity::class.java)
+            intent.putExtra(getString(R.string.file_path_key), fileTest.path)
+            startActivity(intent)
         }
     }
 
@@ -88,6 +106,7 @@ class TestActivity : AppCompatActivity() {
                         fileTest = getFileFromUri(imageUri)
                         testLayout.visibility = View.VISIBLE
                         testTextView.text = fileTest.name
+                        loadDataBtn.setEnabled(true)
                     }
                 }
             }
@@ -103,7 +122,7 @@ class TestActivity : AppCompatActivity() {
         return File(filePath)
     }
 
-    private fun postRequest() {
+    private fun postRequest(dialog: Dialog) {
         val client = OkHttpClient()
         val multipartBodyBuilder = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
@@ -140,14 +159,45 @@ class TestActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call, response: Response) {
+                val responseBody = response.body!!.string()
                 response.use {
                     if (!response.isSuccessful) throw IOException("Unexpected code $response")
+                }
 
-                    for ((name, value) in response.headers) {
-                        println("$name: $value")
+                responseBody.let {
+                    val progressBar: ProgressBar = dialog.findViewById(R.id.progress_bar)
+                    val layoutResult: LinearLayout = dialog.findViewById(R.id.layout_result)
+                    val result: TextView = dialog.findViewById(R.id.result_name)
+                    val resultAccuracy: TextView = dialog.findViewById(R.id.result_accuracy)
+                    val accuracyLabel: TextView = dialog.findViewById(R.id.accuracy_label)
+                    val homeBtn: Button = dialog.findViewById(R.id.return_home_btn)
+                    homeBtn.setOnClickListener {
+                        val intent = Intent(baseContext, MainActivity::class.java)
+                        startActivity(intent)
+
                     }
+                    try {
+                        val mapper = jacksonObjectMapper().registerKotlinModule()
+                        val state: TestResultResponse =
+                            mapper.readValue(responseBody, TestResultResponse::class.java)
 
-                    println(response.body!!.string())
+                        runOnUiThread {
+                            result.text = state.results.firstOrNull() ?: "Nessun risultato"
+                            val accuracy: Double = state.accuracies.firstOrNull() ?: 0.0
+                            val accuracyFormat = DecimalFormat("##.##")
+                            val formattedAccuracy = accuracyFormat.format(accuracy*10)+"%"
+                            resultAccuracy.text = formattedAccuracy
+                            layoutResult.visibility = View.VISIBLE
+                            progressBar.visibility = View.INVISIBLE
+                        }
+                    } catch (e: Exception) {
+                        runOnUiThread {
+                            result.text = e.message
+                            layoutResult.visibility = View.VISIBLE
+                            progressBar.visibility = View.INVISIBLE
+                            accuracyLabel.visibility = View.INVISIBLE
+                        }
+                    }
                 }
             }
         })
