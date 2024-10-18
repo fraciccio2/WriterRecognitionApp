@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_baseline_eye_24"
-        android:contentDescription="show image"
+        android:contentDescription="@string/content_description"
         android:padding="8dp"
         android:clickable="true"
         android:focusable="true" />

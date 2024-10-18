@@ -1,18 +1,23 @@
 <resources>
-    <string name="app_name">Ink Recognition</string>
-    <string name="title_1">Inserisci gli scrittori</string>
-    <string name="new_writer">Nuovo Scrittore</string>
-    <string name="continue_">Prosegui</string>
-    <string name="WARNING">ATTENZIONE</string>
-    <string name="continue_modal_1">Proseguendo non si potrà tornare indietro, sei sicuro di vole proseguire?</string>
-    <string name="yes">si</string>
+    <string name="app_name">Writer Recognition</string>
+    <string name="title_1">Enter the writers</string>
+    <string name="new_writer">New Writer</string>
+    <string name="continue_">Continue</string>
+    <string name="WARNING">WARNING</string>
+    <string name="continue_modal_1">There\'s no going back if you continue, are you sure you want to continue?</string>
+    <string name="yes">yes</string>
     <string name="no">no</string>
     <string name="writers_key">writers_key</string>
-    <string name="title_2">Inserisci il Test</string>
-    <string name="test_btn">Immagine di test</string>
-    <string name="test_all_btn">Analizza</string>
-    <string name="analyze_images_message">Proseguendo inizierai l\'elaborazione dei dati e non potrai tornare indietro, sei sicuro di voler preseguire?</string>
-    <string name="result_message">Lo scrittore dell\'immagine di test è:</string>
+    <string name="title_2">Enter the Test Image</string>
+    <string name="test_btn">Test Image</string>
+    <string name="test_all_btn">Analyze</string>
+    <string name="analyze_images_message">Continuing you will start processing the data and you will not be able to go back, are you sure you want to continue?</string>
+    <string name="result_message">The writer of the test image is:</string>
     <string name="file_path_key">FILE_PATH</string>
-    <string name="analyze_images_accuracy">La probabilità della correttezza del risultato è:</string>
+    <string name="analyze_images_accuracy">The probability of the correctness of the result is:</string>
+    <string name="content_description">Content Description</string>
+    <string name="creator">Project: Francesco Nicolò Giacomazzo</string>
+    <string name="supervisor">Supervisor: Massimo Orazio Spata</string>
+    <string name="department">Department of Mathematics and Computer Science</string>
+    <string name="add_name">Enter writer name</string>
 </resources>
