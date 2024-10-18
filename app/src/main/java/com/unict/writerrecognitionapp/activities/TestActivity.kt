@@ -1,4 +1,4 @@
-package com.unict.inkrecognition.activities
+package com.unict.writerrecognitionapp.activities
 
 import android.app.Activity
 import android.app.Dialog
@@ -20,10 +20,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
-import com.unict.inkrecognition.R
-import com.unict.inkrecognition.models.TestResultResponse
-import com.unict.inkrecognition.models.Writer
-import com.unict.inkrecognition.objects.WritersObject
+import com.unict.writerrecognitionapp.R
+import com.unict.writerrecognitionapp.models.TestResultResponse
+import com.unict.writerrecognitionapp.models.Writer
+import com.unict.writerrecognitionapp.objects.WritersObject
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaType

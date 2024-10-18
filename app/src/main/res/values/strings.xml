@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Writer Recognition</string>
+    <string name="app_name">Writer Recognition App</string>
     <string name="title_1">Enter the writers</string>
     <string name="new_writer">New Writer</string>
     <string name="continue_">Continue</string>

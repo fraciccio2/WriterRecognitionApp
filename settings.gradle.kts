@@ -20,5 +20,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Ink Recognition"
+rootProject.name = "Writer Recognition App"
 include(":app")

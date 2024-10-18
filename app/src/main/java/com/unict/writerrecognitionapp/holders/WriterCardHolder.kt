@@ -1,10 +1,10 @@
-package com.unict.inkrecognition.holders
+package com.unict.writerrecognitionapp.holders
 
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.recyclerview.widget.RecyclerView
-import com.unict.inkrecognition.R
+import com.unict.writerrecognitionapp.R
 
 class WriterCardHolder(view: View): RecyclerView.ViewHolder(view) {
     val addFilesBtn: Button = itemView.findViewById(R.id.add_files_btn)

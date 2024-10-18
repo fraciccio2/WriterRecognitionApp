@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/main_color"
-    tools:context=".activities.StartActivity">
+    tools:context="com.unict.writerrecognitionapp.activities.StartActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

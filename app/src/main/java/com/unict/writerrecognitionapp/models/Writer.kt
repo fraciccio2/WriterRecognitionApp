@@ -1,4 +1,4 @@
-package com.unict.inkrecognition.models
+package com.unict.writerrecognitionapp.models
 
 import java.io.File
 

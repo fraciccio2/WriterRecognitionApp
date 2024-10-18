@@ -13,11 +13,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.InkRecognition"
+        android:theme="@style/Theme.WriterRecognitionApp"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".activities.StartActivity"
+            android:name="com.unict.writerrecognitionapp.activities.StartActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -28,21 +28,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.ImageViewActivity"
+            android:name="com.unict.writerrecognitionapp.activities.ImageViewActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".activities.TestActivity"
+            android:name="com.unict.writerrecognitionapp.activities.TestActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".activities.MainActivity"
+            android:name="com.unict.writerrecognitionapp.activities.MainActivity"
             android:exported="false"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.InkRecognition"/>
+            android:theme="@style/Theme.WriterRecognitionApp"/>
     </application>
 
 </manifest>

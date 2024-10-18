@@ -1,11 +1,11 @@
-package com.unict.inkrecognition.activities
+package com.unict.writerrecognitionapp.activities
 
 import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.unict.inkrecognition.R
+import com.unict.writerrecognitionapp.R
 import java.io.File
 
 class ImageViewActivity : AppCompatActivity() {

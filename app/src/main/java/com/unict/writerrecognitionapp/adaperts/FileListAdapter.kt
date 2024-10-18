@@ -1,13 +1,13 @@
-package com.unict.inkrecognition.adaperts
+package com.unict.writerrecognitionapp.adaperts
 
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.unict.inkrecognition.R
-import com.unict.inkrecognition.activities.ImageViewActivity
-import com.unict.inkrecognition.activities.MainActivity
-import com.unict.inkrecognition.holders.FileListHolder
+import com.unict.writerrecognitionapp.R
+import com.unict.writerrecognitionapp.activities.ImageViewActivity
+import com.unict.writerrecognitionapp.activities.MainActivity
+import com.unict.writerrecognitionapp.holders.FileListHolder
 import java.io.File
 
 class FileListAdapter(private val dataSet: ArrayList<File>, private val context: MainActivity): RecyclerView.Adapter<FileListHolder>() {

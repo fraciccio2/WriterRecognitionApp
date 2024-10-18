@@ -1,6 +1,6 @@
-package com.unict.inkrecognition.objects
+package com.unict.writerrecognitionapp.objects
 
-import com.unict.inkrecognition.models.Writer
+import com.unict.writerrecognitionapp.models.Writer
 
 object WritersObject {
     private var writers: ArrayList<Writer> = arrayListOf()

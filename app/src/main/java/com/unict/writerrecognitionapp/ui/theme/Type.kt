@@ -1,4 +1,4 @@
-package com.unict.inkrecognition.ui.theme
+package com.unict.writerrecognitionapp.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

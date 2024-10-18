@@ -1,4 +1,4 @@
-package com.unict.inkrecognition.ui.theme
+package com.unict.writerrecognitionapp.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.unict.inkrecognition"
+    namespace = "com.unict.writerrecognitionapp"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.unict.inkrecognition"
+        applicationId = "com.unict.writerrecognitionapp"
         minSdk = 33
         targetSdk = 34
         versionCode = 1

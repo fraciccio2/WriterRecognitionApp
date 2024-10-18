@@ -1,4 +1,4 @@
-package com.unict.inkrecognition.adaperts
+package com.unict.writerrecognitionapp.adaperts
 
 import android.app.Activity
 import android.content.Intent
@@ -10,10 +10,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.unict.inkrecognition.R
-import com.unict.inkrecognition.activities.MainActivity
-import com.unict.inkrecognition.holders.WriterCardHolder
-import com.unict.inkrecognition.models.Writer
+import com.unict.writerrecognitionapp.R
+import com.unict.writerrecognitionapp.activities.MainActivity
+import com.unict.writerrecognitionapp.holders.WriterCardHolder
+import com.unict.writerrecognitionapp.models.Writer
 import java.io.File
 
 class WriterCardAdapter(private val dataSet: ArrayList<Writer>, private val context: MainActivity) :

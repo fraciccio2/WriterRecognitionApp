@@ -1,4 +1,4 @@
-package com.unict.inkrecognition.activities
+package com.unict.writerrecognitionapp.activities
 
 import android.app.Dialog
 import android.content.Intent
@@ -10,10 +10,10 @@ import android.widget.Button
 import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.unict.inkrecognition.R
-import com.unict.inkrecognition.adaperts.WriterCardAdapter
-import com.unict.inkrecognition.models.Writer
-import com.unict.inkrecognition.objects.WritersObject
+import com.unict.writerrecognitionapp.R
+import com.unict.writerrecognitionapp.adaperts.WriterCardAdapter
+import com.unict.writerrecognitionapp.models.Writer
+import com.unict.writerrecognitionapp.objects.WritersObject
 
 
 class MainActivity : ComponentActivity() {
