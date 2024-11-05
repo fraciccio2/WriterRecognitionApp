@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/reload"
+        android:title=""
+        android:icon="@drawable/ic_baseline_replay_24" />
+    <item
+        android:id="@+id/add_writer_btn"
+        android:title=""
+        android:icon="@drawable/ic_baseline_add_circle_24" />
+    <item
+        android:id="@+id/continue_btn"
+        android:title=""
+        android:icon="@drawable/ic_baseline_arrow_forward_24"
+        android:enabled="false"/>
+</menu>

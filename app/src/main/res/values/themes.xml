@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.WriterRecognitionApp" parent="android:Theme.Material.Light.NoActionBar">
+    <style name="Theme.WriterRecognitionApp" parent="Theme.MaterialComponents.Light.NoActionBar">
+    </style>
+
+    <style name="ThemeOverlay.AppTheme.TextInputEditText.Outlined" parent="">
+        <item name="colorPrimary">@color/main_color</item>
     </style>
 </resources>

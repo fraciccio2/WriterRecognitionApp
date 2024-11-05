@@ -16,6 +16,7 @@ import com.unict.writerrecognitionapp.holders.WriterCardHolder
 import com.unict.writerrecognitionapp.models.Writer
 import java.io.File
 
+
 class WriterCardAdapter(private val dataSet: ArrayList<Writer>, private val context: MainActivity) :
     RecyclerView.Adapter<WriterCardHolder>() {
     private lateinit var item: Writer
@@ -38,13 +39,18 @@ class WriterCardAdapter(private val dataSet: ArrayList<Writer>, private val cont
         adapters.add(FileListAdapter(item.files, context))
         holder.recyclerView.adapter = adapters[position]
 
-        holder.addFilesBtn.setOnClickListener {
+        holder.addFilesGalleryBtn.setOnClickListener {
             val intent = Intent()
             intent.setType("image/*")
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
             intent.setAction(Intent.ACTION_GET_CONTENT)
             item = dataSet[position]
             adapter = adapters[position]
+            resultLauncher.launch(intent)
+        }
+
+        holder.addFilesCameraBtn.setOnClickListener {
+            val intent = Intent("android.media.action.IMAGE_CAPTURE")
             resultLauncher.launch(intent)
         }
 

@@ -1,59 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
-    
+    android:orientation="vertical">
+
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="280dp"
-        app:cardCornerRadius="16dp"
+        android:theme="@style/Theme.MaterialComponents.Light"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="true"
-        android:theme="@style/Theme.MaterialComponents.Light"
-        >
+        app:strokeColor="@color/main_color"
+        app:strokeWidth="2dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:orientation="horizontal">
-                <EditText
-                    android:id="@+id/writer_name"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_margin="4dp"
-                    android:hint="@string/add_name"
-                    android:background="@drawable/main_color_border"
-                    android:drawablePadding="8dp"
-                    android:inputType="text"
-                    android:padding="8dp"
-                    />
-                <Button
-                    android:id="@+id/add_files_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_margin="4dp"
-                    android:gravity="center"
-                    android:background="@drawable/main_color_background_border"
-                    android:drawableTop="@drawable/ic_baseline_backup_24"
-                    android:paddingTop="12dp"
-                    app:cornerRadius="30dp"
-                    />
+            android:orientation="vertical">
 
-            </LinearLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:hint="@string/add_name"
+                android:inputType="text"
+                android:padding="8dp"
+                android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
+                app:boxStrokeColor="@color/main_color">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/writer_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textCursorDrawable="@null"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/file_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/add_files_gallery_btn"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/main_color_background_border"
+                    android:drawableTop="@drawable/ic_baseline_photo_library_24"
+                    android:gravity="center"
+                    android:paddingTop="20dp" />
+
+                <Button
+                    android:id="@+id/add_files_camera_btn"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/main_color_background_border"
+                    android:drawableTop="@drawable/ic_baseline_photo_camera_24"
+                    android:gravity="center"
+                    android:paddingTop="20dp" />
+            </LinearLayout>
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

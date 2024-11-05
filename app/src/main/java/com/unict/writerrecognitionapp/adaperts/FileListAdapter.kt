@@ -30,5 +30,10 @@ class FileListAdapter(private val dataSet: ArrayList<File>, private val context:
             intent.putExtra(context.getString(R.string.file_path_key), dataSet[position].path)
             context.startActivity(intent)
         }
+
+        holder.imageViewClear.setOnClickListener {
+            dataSet.removeAt(position)
+            notifyItemRemoved(position)
+        }
     }
 }

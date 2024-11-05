@@ -5,7 +5,6 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.icu.text.DecimalFormat
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -184,8 +183,8 @@ class TestActivity : AppCompatActivity() {
                         runOnUiThread {
                             result.text = state.results.firstOrNull() ?: "Nessun risultato"
                             val accuracy: Double = state.accuracies.firstOrNull() ?: 0.0
-                            val accuracyFormat = DecimalFormat("#,##%")
-                            val formattedAccuracy = accuracyFormat.format(accuracy)
+                            val accuracyPercentage = accuracy * 100
+                            val formattedAccuracy = "%.2f%%".format(accuracyPercentage)
                             resultAccuracy.text = formattedAccuracy
                             layoutResult.visibility = View.VISIBLE
                             progressBar.visibility = View.INVISIBLE
