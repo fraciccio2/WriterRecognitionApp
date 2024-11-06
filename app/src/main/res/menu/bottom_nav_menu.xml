@@ -12,5 +12,5 @@
         android:id="@+id/continue_btn"
         android:title=""
         android:icon="@drawable/ic_baseline_arrow_forward_24"
-        android:enabled="false"/>
+        android:visible="false"/>
 </menu>

@@ -3,10 +3,12 @@ package com.unict.writerrecognitionapp.adaperts
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +17,7 @@ import com.unict.writerrecognitionapp.activities.MainActivity
 import com.unict.writerrecognitionapp.holders.WriterCardHolder
 import com.unict.writerrecognitionapp.models.Writer
 import java.io.File
+import java.util.Date
 
 
 class WriterCardAdapter(private val dataSet: ArrayList<Writer>, private val context: MainActivity) :
@@ -22,6 +25,7 @@ class WriterCardAdapter(private val dataSet: ArrayList<Writer>, private val cont
     private lateinit var item: Writer
     private var adapters: ArrayList<FileListAdapter> = arrayListOf()
     private lateinit var adapter: FileListAdapter
+    private lateinit var currentPhotoPath: String
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -50,8 +54,15 @@ class WriterCardAdapter(private val dataSet: ArrayList<Writer>, private val cont
         }
 
         holder.addFilesCameraBtn.setOnClickListener {
-            val intent = Intent("android.media.action.IMAGE_CAPTURE")
-            resultLauncher.launch(intent)
+            item = dataSet[position]
+            adapter = adapters[position]
+            val photoFile: File = createImageFile()
+            val photoUri: Uri = FileProvider.getUriForFile(
+                context,
+                "com.unict.writerrecognitionapp.fileprovider",
+                photoFile
+            )
+            takePictureLauncher.launch(photoUri)
         }
 
         holder.inputName.addTextChangedListener {
@@ -83,6 +94,16 @@ class WriterCardAdapter(private val dataSet: ArrayList<Writer>, private val cont
             }
         }
 
+    private val takePictureLauncher =
+        context.registerForActivityResult(ActivityResultContracts.TakePicture()) { success: Boolean ->
+            if (success) {
+                val photoFile = File(currentPhotoPath)
+                item.files.add(photoFile)
+                adapter.notifyItemInserted(item.files.size - 1)
+                context.checkContinueBtn()
+            }
+        }
+
     private fun getFileFromUri(uri: Uri): File {
         val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
         val cursor = context.contentResolver.query(uri, filePathColumn, null, null, null)
@@ -91,6 +112,14 @@ class WriterCardAdapter(private val dataSet: ArrayList<Writer>, private val cont
         val filePath = columnIndex?.let { cursor.getString(it) }
         cursor?.close()
         return File(filePath)
+    }
+
+    private fun createImageFile(): File {
+        val timeStamp = Date().time
+        val storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val file = File(storageDir, "$timeStamp.jpg")
+        currentPhotoPath = file.absolutePath
+        return file
     }
 
 }

@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
                     )
                     adapter.notifyItemInserted(writers.size - 1)
                     recyclerView.smoothScrollToPosition(writers.size - 1)
-                    continueBtn.setEnabled(false)
+                    continueBtn.setVisible(false)
                     true
                 }
                 R.id.continue_btn -> {
@@ -84,7 +84,7 @@ class MainActivity : ComponentActivity() {
                     true
                 }
                 R.id.reload -> {
-                    continueBtn.setEnabled(false)
+                    continueBtn.setVisible(false)
                     this.recreate()
                     true
                 }
@@ -97,6 +97,6 @@ class MainActivity : ComponentActivity() {
     }
 
     fun checkContinueBtn() {
-        continueBtn.setEnabled(writers.all { writer -> writer.name.isNotEmpty() && writer.files.size >= 2 })
+        continueBtn.setVisible(writers.all { writer -> writer.name.isNotEmpty() && writer.files.size >= 2 })
     }
 }
