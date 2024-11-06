@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="20dp"
-    android:theme="@style/Theme.MaterialComponents.Light"
-    android:background="@drawable/main_color_border">
+    android:background="@drawable/main_color_border"
+    style="@style/Theme.MaterialComponents.Light.NoActionBar">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,7 +49,7 @@
                 android:layout_margin="5dp"
                 android:text="@string/yes"
                 android:textColor="@color/white"
-                android:background="@drawable/success_color_background2"
+                android:background="@drawable/success_color_background"
                 android:textSize="14sp" />
 
             <Button

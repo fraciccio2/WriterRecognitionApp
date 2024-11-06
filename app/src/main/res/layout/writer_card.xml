@@ -58,7 +58,7 @@
                     android:layout_margin="8dp"
                     android:layout_weight="1"
                     android:background="@drawable/main_color_background_border"
-                    android:drawableTop="@drawable/ic_baseline_photo_library_24"
+                    android:drawableTop="@drawable/ic_baseline_add_photo_alternate_24"
                     android:gravity="center"
                     android:paddingTop="20dp" />
 
@@ -70,7 +70,7 @@
                     android:layout_margin="8dp"
                     android:layout_weight="1"
                     android:background="@drawable/main_color_background_border"
-                    android:drawableTop="@drawable/ic_baseline_photo_camera_24"
+                    android:drawableTop="@drawable/ic_baseline_add_a_photo_24"
                     android:gravity="center"
                     android:paddingTop="20dp" />
             </LinearLayout>

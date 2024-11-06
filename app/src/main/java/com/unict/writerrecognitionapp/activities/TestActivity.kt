@@ -7,7 +7,9 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
+import android.view.MenuItem
 import android.view.View
 import android.view.Window
 import android.widget.Button
@@ -17,8 +19,10 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.unict.writerrecognitionapp.R
 import com.unict.writerrecognitionapp.models.TestResultResponse
 import com.unict.writerrecognitionapp.models.Writer
@@ -33,15 +37,15 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.Response
 import java.io.File
 import java.io.IOException
+import java.util.Date
 
 class TestActivity : AppCompatActivity() {
-    private lateinit var addTestFileBtn: Button
-    private lateinit var loadDataBtn: Button
-    private lateinit var testLayout: LinearLayout
-    private lateinit var testTextView: TextView
+    private lateinit var loadDataItem: MenuItem
     private lateinit var testImageView: ImageView
-    private lateinit var fileTest: File
     private lateinit var writers: ArrayList<Writer>
+    private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var currentPhotoPath: String
+    private var fileTest: File? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,49 +53,65 @@ class TestActivity : AppCompatActivity() {
 
         writers = WritersObject.getWriters()
 
-        addTestFileBtn = findViewById(R.id.test_btn)
-        loadDataBtn = findViewById(R.id.load_data)
-        testLayout = findViewById(R.id.test_layout)
-        testTextView = findViewById(R.id.text_view_test)
-        testImageView = findViewById(R.id.test_show_image)
+        testImageView = findViewById(R.id.test_image_view)
+        bottomNavigationView = findViewById(R.id.bottom_navigation_view)
+        loadDataItem = bottomNavigationView.menu.findItem(R.id.load_data)
 
-        addTestFileBtn.setOnClickListener {
-            val intent = Intent()
-            intent.setType("image/*")
-            intent.setAction(Intent.ACTION_GET_CONTENT)
-            resultLauncher.launch(intent)
-        }
+        bottomNavigationView.background = null
+        bottomNavigationView.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.reload_test -> {
+                    fileTest = null
+                    testImageView.setImageDrawable(null)
+                    loadDataItem.setVisible(false)
+                    true
+                }
+                R.id.test_btn -> {
+                    val intent = Intent()
+                    intent.setType("image/*")
+                    intent.setAction(Intent.ACTION_GET_CONTENT)
+                    resultLauncher.launch(intent)
+                    true
+                }
+                R.id.test_photo_btn -> {
+                    val photoFile: File = createImageFile()
+                    val photoUri: Uri = FileProvider.getUriForFile(
+                        this,
+                        "com.unict.writerrecognitionapp.fileprovider",
+                        photoFile
+                    )
+                    takePictureLauncher.launch(photoUri)
+                    true
+                }
+                R.id.load_data -> {
+                    val dialog = Dialog(this)
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                    dialog.setCancelable(false)
+                    dialog.setContentView(R.layout.modal_dialog)
+                    dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    val message: TextView = dialog.findViewById(R.id.modal_message)
+                    val yesBtn: Button = dialog.findViewById(R.id.yes_btn)
+                    val noBtn: Button = dialog.findViewById(R.id.no_btn)
+                    message.text = getString(R.string.analyze_images_message)
+                    yesBtn.setOnClickListener {
+                        val dialogNew = Dialog(this)
+                        dialogNew.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                        dialogNew.setCancelable(false)
+                        dialogNew.setContentView(R.layout.modal_result)
+                        dialogNew.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                        dialog.dismiss()
+                        dialogNew.show()
+                        postRequest(dialogNew)
+                    }
+                    noBtn.setOnClickListener {
+                        dialog.dismiss()
+                    }
+                    dialog.show()
+                    true
+                }
 
-        loadDataBtn.setOnClickListener {
-            val dialog = Dialog(this)
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialog.setCancelable(false)
-            dialog.setContentView(R.layout.modal_dialog)
-            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            val message: TextView = dialog.findViewById(R.id.modal_message)
-            val yesBtn: Button = dialog.findViewById(R.id.yes_btn)
-            val noBtn: Button = dialog.findViewById(R.id.no_btn)
-            message.text = getString(R.string.analyze_images_message)
-            yesBtn.setOnClickListener {
-                val dialogNew = Dialog(this)
-                dialogNew.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                dialogNew.setCancelable(false)
-                dialogNew.setContentView(R.layout.modal_result)
-                dialogNew.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                dialog.dismiss()
-                dialogNew.show()
-                postRequest(dialogNew)
+                else -> false
             }
-            noBtn.setOnClickListener {
-                dialog.dismiss()
-            }
-            dialog.show()
-        }
-
-        testImageView.setOnClickListener {
-            val intent = Intent(this, ImageViewActivity::class.java)
-            intent.putExtra(getString(R.string.file_path_key), fileTest.path)
-            startActivity(intent)
         }
     }
 
@@ -103,9 +123,8 @@ class TestActivity : AppCompatActivity() {
                     val imageUri = data.data
                     if (imageUri != null) {
                         fileTest = getFileFromUri(imageUri)
-                        testLayout.visibility = View.VISIBLE
-                        testTextView.text = fileTest.name
-                        loadDataBtn.setEnabled(true)
+                        loadDataItem.setVisible(true)
+                        testImageView.setImageURI(imageUri)
                     }
                 }
             }
@@ -138,8 +157,8 @@ class TestActivity : AppCompatActivity() {
 
         multipartBodyBuilder.addFormDataPart(
             "test0",
-            fileTest.name,
-            fileTest.asRequestBody(MEDIA_TYPE_MARKDOWN)
+            fileTest!!.name,
+            fileTest!!.asRequestBody(MEDIA_TYPE_MARKDOWN)
         )
 
         val namesWriters = writers.joinToString(",") { w -> w.name }
@@ -200,6 +219,23 @@ class TestActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private val takePictureLauncher =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { success: Boolean ->
+            if (success) {
+                val photoFile = File(currentPhotoPath)
+                fileTest = photoFile
+                testImageView.setImageURI(Uri.fromFile(fileTest))
+            }
+        }
+
+    private fun createImageFile(): File {
+        val timeStamp = Date().time
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val file = File(storageDir, "$timeStamp.jpg")
+        currentPhotoPath = file.absolutePath
+        return file
     }
 
     companion object {
