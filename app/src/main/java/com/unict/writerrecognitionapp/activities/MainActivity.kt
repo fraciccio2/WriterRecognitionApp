@@ -89,9 +89,7 @@ class MainActivity : ComponentActivity() {
                     true
                 }
 
-                else -> {
-                    true
-                }
+                else -> false
             }
         }
     }

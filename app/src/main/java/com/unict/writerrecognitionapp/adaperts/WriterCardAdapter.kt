@@ -1,11 +1,13 @@
 package com.unict.writerrecognitionapp.adaperts
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
@@ -36,6 +38,7 @@ class WriterCardAdapter(private val dataSet: ArrayList<Writer>, private val cont
         return WriterCardHolder(view)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: WriterCardHolder, position: Int) {
         item = dataSet[position]
 
@@ -68,6 +71,19 @@ class WriterCardAdapter(private val dataSet: ArrayList<Writer>, private val cont
         holder.inputName.addTextChangedListener {
             dataSet[position].name = holder.inputName.text.toString()
             context.checkContinueBtn()
+        }
+
+        holder.recyclerView.setOnTouchListener { _, event ->
+            val fatherRecyclerView = context.findViewById<RecyclerView>(R.id.card_writer)
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    fatherRecyclerView.requestDisallowInterceptTouchEvent(true)
+                }
+                MotionEvent.ACTION_UP -> {
+                    fatherRecyclerView.requestDisallowInterceptTouchEvent(false)
+                }
+            }
+            return@setOnTouchListener false
         }
     }
 
