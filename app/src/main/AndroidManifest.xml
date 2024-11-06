@@ -36,7 +36,7 @@
             android:name="com.unict.writerrecognitionapp.activities.TestActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.WriterRecognitionApp"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name="com.unict.writerrecognitionapp.activities.MainActivity"
             android:exported="false"

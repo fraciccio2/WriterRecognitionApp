@@ -81,6 +81,7 @@ class TestActivity : AppCompatActivity() {
                         photoFile
                     )
                     takePictureLauncher.launch(photoUri)
+                    loadDataItem.setVisible(true)
                     true
                 }
                 R.id.load_data -> {

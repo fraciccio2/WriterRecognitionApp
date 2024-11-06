@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="20dp"
     android:background="@drawable/main_color_border"
-    style="@style/Theme.MaterialComponents.Light.NoActionBar">
+    android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
 
     <LinearLayout
         android:layout_width="match_parent"
