@@ -24,6 +24,7 @@
         android:visibility="invisible">
 
         <TextView
+            android:id="@+id/writer_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -59,6 +60,17 @@
             android:textStyle="bold"
             android:gravity="center"
             android:textColor="@color/success"/>
+
+        <TextView
+            android:id="@+id/error_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/return_home_btn"

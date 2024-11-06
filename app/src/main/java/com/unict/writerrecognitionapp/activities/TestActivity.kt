@@ -179,14 +179,39 @@ class TestActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call, response: Response) {
                 val responseBody = response.body!!.string()
+                val result: TextView = dialog.findViewById(R.id.result_name)
                 response.use {
-                    if (!response.isSuccessful) throw IOException("Unexpected code $response")
+                    if (!response.isSuccessful) {
+                        runOnUiThread {
+                            val progressBar: ProgressBar = dialog.findViewById(R.id.progress_bar)
+                            val layoutResult: LinearLayout = dialog.findViewById(R.id.layout_result)
+                            val errorMessage: TextView = dialog.findViewById(R.id.error_message)
+                            val homeBtn: Button = dialog.findViewById(R.id.return_home_btn)
+                            val writerLabel: TextView = dialog.findViewById(R.id.writer_label)
+                            val accuracyLabel: TextView = dialog.findViewById(R.id.accuracy_label)
+                            val resultAccuracy: TextView = dialog.findViewById(R.id.result_accuracy)
+                            progressBar.visibility = View.INVISIBLE
+                            layoutResult.visibility = View.VISIBLE
+                            homeBtn.visibility = View.VISIBLE
+                            errorMessage.text = getString(R.string.error_500)
+                            errorMessage.visibility = View.VISIBLE
+                            homeBtn.setOnClickListener {
+                                val intent = Intent(baseContext, MainActivity::class.java)
+                                startActivity(intent)
+
+                            }
+                            writerLabel.visibility = View.GONE
+                            result.visibility = View.GONE
+                            accuracyLabel.visibility = View.GONE
+                            resultAccuracy.visibility = View.GONE
+                        }
+                        throw IOException("Unexpected code $response")
+                    }
                 }
 
                 responseBody.let {
                     val progressBar: ProgressBar = dialog.findViewById(R.id.progress_bar)
                     val layoutResult: LinearLayout = dialog.findViewById(R.id.layout_result)
-                    val result: TextView = dialog.findViewById(R.id.result_name)
                     val resultAccuracy: TextView = dialog.findViewById(R.id.result_accuracy)
                     val accuracyLabel: TextView = dialog.findViewById(R.id.accuracy_label)
                     val homeBtn: Button = dialog.findViewById(R.id.return_home_btn)

@@ -20,4 +20,5 @@
     <string name="supervisor">Supervisor: Massimo Orazio Spata</string>
     <string name="department">Department of Mathematics and Computer Science</string>
     <string name="add_name">Enter writer name</string>
+    <string name="error_500">We were unable to correctly locate the text in all images. Please try again by improving the image quality.</string>
 </resources>
