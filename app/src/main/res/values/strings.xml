@@ -14,7 +14,7 @@
     <string name="analyze_images_message">Continuing you will start processing the data and you will not be able to go back, are you sure you want to continue?</string>
     <string name="result_message">The writer of the test image is:</string>
     <string name="file_path_key">FILE_PATH</string>
-    <string name="analyze_images_accuracy">The probability of the correctness of the result is:</string>
+    <string name="analyze_images_accuracy">The accuracy of the result is:</string>
     <string name="content_description">Content Description</string>
     <string name="creator">Project: Francesco Nicolò Giacomazzo</string>
     <string name="supervisor">Supervisor: Massimo Orazio Spata</string>
