@@ -34,6 +34,7 @@ class FileListAdapter(private val dataSet: ArrayList<File>, private val context:
         holder.imageViewClear.setOnClickListener {
             dataSet.removeAt(position)
             notifyItemRemoved(position)
+            context.checkContinueBtn()
         }
     }
 }
