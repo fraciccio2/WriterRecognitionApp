@@ -44,8 +44,6 @@ The backend is built with Flask and handles author recognition using machine lea
 4. Push to the branch (`git push origin feature/AmazingFeature`).
 5. Open a pull request.
 
-Distributed under the MIT License. See `LICENSE` for more information.
+## Demo
 
----
-
-This README provides a clear project overview along with instructions on setup and contributing.
+https://github.com/user-attachments/assets/9a1babaa-e1c8-4281-b55a-72505d08f076
