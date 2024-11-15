@@ -5,10 +5,10 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Environment
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
+import android.webkit.MimeTypeMap
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.core.widget.addTextChangedListener
@@ -104,6 +104,10 @@ class WriterCardAdapter(private val dataSet: ArrayList<Writer>, private val cont
                             item.files.add(file)
                             adapter.notifyItemInserted(item.files.size - 1)
                         }
+                    } ?: data.data?.let { singleImageUri ->
+                        val file = getFileFromUri(singleImageUri)
+                        item.files.add(file)
+                        adapter.notifyItemInserted(item.files.size - 1)
                     }
                     context.checkContinueBtn()
                 }
@@ -121,13 +125,15 @@ class WriterCardAdapter(private val dataSet: ArrayList<Writer>, private val cont
         }
 
     private fun getFileFromUri(uri: Uri): File {
-        val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor = context.contentResolver.query(uri, filePathColumn, null, null, null)
-        cursor?.moveToFirst()
-        val columnIndex = cursor?.getColumnIndex(filePathColumn[0])
-        val filePath = columnIndex?.let { cursor.getString(it) }
-        cursor?.close()
-        return File(filePath)
+        val mimeType = context.contentResolver.getType(uri)
+        val extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType) ?: "tmp"
+        val tempFile = File(context.cacheDir, "${System.currentTimeMillis()}.$extension")
+        context.contentResolver.openInputStream(uri)?.use { inputStream ->
+            tempFile.outputStream().use { outputStream ->
+                inputStream.copyTo(outputStream)
+            }
+        } ?: throw IllegalArgumentException("Impossibile accedere al file da URI: $uri")
+        return tempFile
     }
 
     private fun createImageFile(): File {

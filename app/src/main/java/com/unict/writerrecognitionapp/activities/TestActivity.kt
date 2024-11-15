@@ -9,9 +9,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.DisplayMetrics
 import android.view.MenuItem
 import android.view.View
 import android.view.Window
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -100,6 +102,9 @@ class TestActivity : AppCompatActivity() {
                         dialogNew.setCancelable(false)
                         dialogNew.setContentView(R.layout.modal_result)
                         dialogNew.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                        val displayMetrics = DisplayMetrics()
+                        windowManager.defaultDisplay.getMetrics(displayMetrics)
+                        dialogNew.window?.setLayout(displayMetrics.widthPixels, WindowManager.LayoutParams.WRAP_CONTENT)
                         dialog.dismiss()
                         dialogNew.show()
                         postRequest(dialogNew)
